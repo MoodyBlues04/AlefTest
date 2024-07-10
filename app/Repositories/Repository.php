@@ -35,22 +35,23 @@ abstract class Repository
         return $this->query->firstOrCreate($attributes);
     }
 
-    public function create(array $attributes): Builder|Model
+    public function create(array $attributes): ?Model
     {
-        return $this->query->create($attributes);
+        $res = $this->query->create($attributes);
+        return ($res instanceof Builder) ? null : $res;
     }
 
-    public function update(array $attributes, Model $model): bool
+    public function update(array $attributes, Model $model): ?Model
     {
-        return $model->update($attributes);
+        return $model->update($attributes) ? $model : null;
     }
 
-    public function updateFromRequest(UpdateRequest $request, Model $model): bool
+    public function updateFromRequest(UpdateRequest $request, Model $model): ?Model
     {
         return $this->update($request->getDataToUpdate(), $model);
     }
 
-    public function createFromRequest(CreateRequest $request): Builder|Model
+    public function createFromRequest(CreateRequest $request): ?Model
     {
         return $this->create($request->getDataToCreate());
     }

@@ -33,4 +33,14 @@ class StudyPlan extends Model
     {
         return $this->hasMany(ClassLection::class, 'study_plan_id');
     }
+
+    /**
+     * @return ClassLection[]
+     */
+    public function getLectionsByStatus(string $status): array
+    {
+        return $this->classLections()
+            ->where('status', $status)
+            ->get()->all();
+    }
 }

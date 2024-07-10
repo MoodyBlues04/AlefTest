@@ -1,7 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\StudentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,3 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::resource('student', StudentController::class)
+    ->except(['create', 'edit']);
