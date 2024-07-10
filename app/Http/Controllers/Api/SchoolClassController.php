@@ -27,7 +27,7 @@ class SchoolClassController extends ApiController
         return $this->success('Class', $class->toArray());
     }
 
-    public function create(CreateSchoolClassRequest $request): JsonResponse
+    public function store(CreateSchoolClassRequest $request): JsonResponse
     {
         /** @var SchoolClass $created */
         $created = $this->schoolClassRepository->createFromRequest($request);
