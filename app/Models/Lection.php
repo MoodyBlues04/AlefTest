@@ -49,11 +49,12 @@ class Lection extends Model
 
     public function getLearntClasses(): Collection
     {
-        return $this->classLections()
-            ->select('study_plan_id')
+        $ids = $this->classLections()
             ->where('status', ClassLection::STATUS_LEARNT)
-            ->distinct()
             ->get()
-            ->map(fn (int $classId) => SchoolClass::query()->find($classId));
+            ->map(fn (ClassLection $classLection) => $classLection->studyPlan->schoolClass->id)
+            ->unique()
+            ->all();
+        return SchoolClass::query()->whereIn('id', $ids)->get();
     }
 }

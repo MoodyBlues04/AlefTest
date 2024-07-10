@@ -24,7 +24,6 @@ class ClassLection extends Model
     public const STATUS_CREATED = 'created';
     public const STATUS_LEARNT = 'learnt';
 
-
     protected $fillable = [
         'order',
         'status',
@@ -40,5 +39,11 @@ class ClassLection extends Model
     public function studyPlan(): BelongsTo
     {
         return $this->belongsTo(StudyPlan::class, 'study_plan_id');
+    }
+
+    public function learn(): bool
+    {
+        $this->status = self::STATUS_LEARNT;
+        return $this->save();
     }
 }
