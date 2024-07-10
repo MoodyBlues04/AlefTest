@@ -26,7 +26,7 @@ class UpdateStudentRequest extends FormRequest implements UpdateRequest
         return [
             'name' => 'required|string',
             'email' => 'required|string|email',
-            'class_id' => 'nullable|int|exists:school_classes',
+            'class_id' => 'nullable|int|exists:school_classes,id',
         ];
     }
 
