@@ -2,24 +2,11 @@
 
 namespace App\Http\Requests\Api;
 
-use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
 
-class UpdateStudyPlanRequest extends FormRequest
+class UpdateStudyPlanRequest extends ApiRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
-    {
-        return true;
-    }
-
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
     public function rules(): array
     {
         return [
@@ -27,5 +14,17 @@ class UpdateStudyPlanRequest extends FormRequest
             'lections.*.lection_id' => 'required|int|' . Rule::exists('lections', 'id'),
             'lections.*.order' => 'required|int|min:1',
         ];
+    }
+
+    protected function extraValidation(Validator $validator): void
+    {
+        $lectionIds = [];
+        foreach ($this->post('lections') as $lectionData) {
+            if (in_array($lectionData['lection_id'], $lectionIds)) {
+                $validator->errors()->add('lections', 'Lection ids not unique');
+                break;
+            }
+            $lectionIds[]= $lectionData['lection_id'];
+        }
     }
 }
