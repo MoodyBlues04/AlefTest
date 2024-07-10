@@ -43,4 +43,14 @@ class StudyPlan extends Model
             ->where('status', $status)
             ->get()->all();
     }
+
+    /**
+     * @return ClassLection[]
+     */
+    public function getLectionsOrdered(): array
+    {
+        return $this->classLections()
+            ->orderBy('order')
+            ->get()->all();
+    }
 }

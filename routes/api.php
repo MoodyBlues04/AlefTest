@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StudentController;
 use App\Http\Controllers\Api\SchoolClassController;
+use App\Http\Controllers\Api\StudyPlanController;
 use App\Http\Controllers\Api\LectionController;
 
 /*
@@ -18,4 +19,8 @@ use App\Http\Controllers\Api\LectionController;
 
 Route::apiResource('student', StudentController::class);
 Route::apiResource('class', SchoolClassController::class);
+Route::get('/class/{class}/study_plan', StudyPlanController::class . '@show')
+    ->name('class.plan.show');
+Route::post('/class/{class}/study_plan', StudyPlanController::class . '@update')
+    ->name('class.plan.update');
 Route::apiResource('lection', LectionController::class);
