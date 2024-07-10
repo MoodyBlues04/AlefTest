@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,6 +14,22 @@ return new class extends Migration
     {
         Schema::create('class_lections', function (Blueprint $table) {
             $table->id();
+            $table->integer('order');
+            $table->string('status')->default(\App\Models\ClassLection::STATUS_CREATED);
+            $table->foreignId('study_plan_id');
+            $table->foreign('study_plan_id')
+                ->references('id')
+                ->on('study_plans')
+                ->onDelete('cascade');
+            $table->foreignId('lection_id');
+            $table->foreign('lection_id')
+                ->references('id')
+                ->on('lections')
+                ->onDelete('cascade');
+
+//            There should be unique lections in study plan
+            $table->unique(['study_plan_id', 'lection_id']);
+
             $table->timestamps();
         });
     }
