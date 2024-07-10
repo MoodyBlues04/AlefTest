@@ -6,7 +6,7 @@ namespace App\Http\Requests\Api;
 use App\Http\Requests\UpdateRequest;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateStudentRequest extends FormRequest implements UpdateRequest
+class UpdateLectionRequest extends FormRequest implements UpdateRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,8 @@ class UpdateStudentRequest extends FormRequest implements UpdateRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string',
-            'email' => 'required|string|email',
-            'class_id' => 'nullable|int|exists:school_classes',
+            'theme' => 'required|string|max:55',
+            'description' => 'nullable|string|max:255',
         ];
     }
 

@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\StudentController;
+use App\Http\Controllers\Api\SchoolClassController;
+use App\Http\Controllers\Api\LectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,5 +16,6 @@ use App\Http\Controllers\Api\StudentController;
 |
 */
 
-Route::resource('student', StudentController::class)
-    ->except(['create', 'edit']);
+Route::apiResource('student', StudentController::class);
+Route::apiResource('class', SchoolClassController::class);
+Route::apiResource('lection', LectionController::class);
